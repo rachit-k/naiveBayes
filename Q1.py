@@ -1,29 +1,20 @@
-import numpy as np
+
 import csv
-import matplotlib.pyplot as plt
 import math
-import sys
-import nltk 
-from nltk.tokenize import RegexpTokenizer
-from nltk.stem.porter import PorterStemmer
-from nltk.corpus import stopwords
 import re
-import time
 
 rows = []
 
 vocab={}
-# reading csv file 
 n1=0
 n2=0
-
+n1_test=0
+n2_test=0
 
 with open('train.csv', 'r',encoding='latin-1') as file: 
 
-    data = csv.reader(file) 
-  
+    data = csv.reader(file)   
     for row in data: 
-#        print(row)
         pol=row[0]
         if pol=='2':
             continue
@@ -36,8 +27,8 @@ with open('train.csv', 'r',encoding='latin-1') as file:
             n1=n1+1
             for word in re.split(r'[;,!.\s]\s*', text):
                 if word in vocab:
-                    vocab[word][0]=vocab[word][0]+1
-                elif word!='': #and word[0]!='@':  
+                    vocab[word][0]=vocab[word][0]+1#1 for smoothing
+                elif word!='': 
                     vocab[word]=[2,1]
 #                else:
 #                    print(word)
@@ -58,8 +49,7 @@ n=n1+n2
 ex=0
 correct1=0
 correct2=0
-n1_test=0
-n2_test=0
+
 
 
 with open('test.csv', 'r',encoding='latin-1') as file1: 
@@ -102,10 +92,9 @@ print(accuracy)
 print('random accuracy:')  
 print('50.0') 
 print('majority accuracy:')  
-print(max(n1_test,n2_test)*100/(n1_test+n2_test))
+print(max(n1,n2)*100/(n))
 
 print('confusion matrix:')
-print('actual')
-print(correct1,n2_test-correct2)
-print(n1_test-correct1,correct2)
+print('[[',correct1,n2_test-correct2,']')
+print('[',n1_test-correct1,correct2,']]')
 

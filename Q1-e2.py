@@ -1,10 +1,9 @@
-import numpy as np
 import csv
 import math
 from nltk.tokenize import TweetTokenizer
 from nltk.stem.porter import PorterStemmer
 from nltk.corpus import stopwords
-
+import re
 
 rows = []
 
@@ -48,7 +47,7 @@ with open('train.csv', 'r',encoding='latin-1') as file:
                 word=lword+mword+rword
                 if word in vocab:
                     vocab[word][0]=vocab[word][0]+1
-                elif word!='': #and word[0]!='@':  
+                elif word!='':
                     vocab[word]=[2,1]
                 lword=mword    
                 mword=rword
@@ -134,12 +133,11 @@ print(accuracy)
 print('random accuracy:')  
 print('50.0') 
 print('majority accuracy:')  
-print(max(n1_test,n2_test)*100/(n1_test+n2_test))
+print(max(n1,n2)*100/(n))
 
 print('confusion matrix:')
-print('actual')
-print(correct1,n2_test-correct2)
-print(n1_test-correct1,correct2)
+print('[[',correct1,n2_test-correct2,']')
+print('[',n1_test-correct1,correct2,']]')
 
 #accuracy:
 #67.40947075208913

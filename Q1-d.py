@@ -1,14 +1,9 @@
-import numpy as np
 import csv
-import matplotlib.pyplot as plt
 import math
-import sys
-import nltk 
 from nltk.tokenize import TweetTokenizer
 from nltk.stem.porter import PorterStemmer
 from nltk.corpus import stopwords
-import re
-import time
+
 
 
 #def stemming(infile, outfile):
@@ -93,7 +88,7 @@ correct2=0
 n1_test=0
 n2_test=0
 
-with open('test.csv', 'r',encoding='latin-1') as file1: 
+with open('train.csv', 'r',encoding='latin-1') as file1: 
 
     data = csv.reader(file1) 
 
@@ -113,17 +108,13 @@ with open('test.csv', 'r',encoding='latin-1') as file1:
         text = text.lower()
         text = tokenizer.tokenize(text)
         text = [ token for token in text if not token in stop_words ]
-        text = [ p_stemmer.stem(token) for token in text ]
-#        print(text)        
+        text = [ p_stemmer.stem(token) for token in text ]       
         p1=math.log(n1/n)
         p2=math.log(n2/n)
         for word in text:
             if word in vocab:
                 p1=p1+math.log(vocab[word][0])-math.log(vocab[word][0]+vocab[word][1])
                 p2=p2+math.log(vocab[word][1])-math.log(vocab[word][0]+vocab[word][1])
-#        print(p1)
-#        print(p2) 
-#        print(pol)
         if p1>p2:
             if pol=='0':
                 correct1=correct1+1
@@ -137,12 +128,11 @@ print(accuracy)
 print('random accuracy:')  
 print('50.0') 
 print('majority accuracy:')  
-print(max(n1_test,n2_test)*100/(n1_test+n2_test))
+print(max(n1,n2)*100/(n))
 
 print('confusion matrix:')
-print('actual')
-print(correct1,n2_test-correct2)
-print(n1_test-correct1,correct2)
+print('[[',correct1,n2_test-correct2,']')
+print('[',n1_test-correct1,correct2,']]')
 
 
 

@@ -1,9 +1,5 @@
-import numpy as np
 import csv
-import matplotlib.pyplot as plt
 import math
-import sys
-import nltk 
 from nltk.tokenize import TweetTokenizer
 from nltk.stem.porter import PorterStemmer
 from nltk.corpus import stopwords
@@ -131,12 +127,11 @@ print(accuracy)
 print('random accuracy:')  
 print('50.0') 
 print('majority accuracy:')  
-print(max(n1_test,n2_test)*100/(n1_test+n2_test))
+print(max(n1,n2)*100/(n))
 
 print('confusion matrix:')
-print('actual')
-print(correct1,n2_test-correct2)
-print(n1_test-correct1,correct2)
+print('[[',correct1,n2_test-correct2,']')
+print('[',n1_test-correct1,correct2,']]')
 
 #accuracy:
 #79.66573816155989
